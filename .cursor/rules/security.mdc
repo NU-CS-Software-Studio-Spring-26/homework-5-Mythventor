@@ -1,0 +1,11 @@
+---
+description: Security rules for the sample todo app
+alwaysApply: true
+---
+
+- Never write, log, or echo secrets, API keys, or production credentials
+- Never use `eval` on user input under any circumstances
+- Never use `html_safe` or `raw` on untrusted/user-supplied input
+- Always use parameterized queries — never string-interpolate SQL
+- Do not disable CSRF protection, mass assignment protection, or Devise's session checks
+- Never expose internal error messages or stack traces to the browser
