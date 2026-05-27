@@ -1,4 +1,10 @@
 <div id="<%= dom_id todo %>">
+  <%= button_to(
+        todo.high_priority? ? "⭐" : "☆",
+        toggle_priority_todo_path(todo),
+        method: :patch
+      ) %>
+
   <p>
     <strong>Description:</strong>
     <%= todo.description %>

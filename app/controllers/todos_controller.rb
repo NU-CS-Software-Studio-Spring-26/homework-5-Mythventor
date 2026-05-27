@@ -57,6 +57,16 @@ class TodosController < ApplicationController
     end
   end
 
+  def toggle_priority
+    @todo = Todo.find(params.expect(:id))
+    @todo.high_priority = !@todo.high_priority
+    @todo.save
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   def hello
     respond_to do |format|
       format.html { render :hello }
