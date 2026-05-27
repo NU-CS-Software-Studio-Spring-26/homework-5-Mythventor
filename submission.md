@@ -82,3 +82,170 @@ There is also a controller test for this path in test/controllers/todos_controll
 
 
 Plan mode:
+Prompt: I want to change todo creation so that a todo is automatically 
+associated with the user who created it. Propose a plan as a numbered 
+list of changes, including files to edit, new tests to add, and any 
+migration. Do not write code.
+
+Answer:
+Todo User Association Plan
+
+
+
+
+
+Add a migration that links todos to users.
+
+
+
+
+
+Generate a migration such as AddUserToTodos that adds a required user reference to db/schema.rb through Rails migration output.
+
+
+
+Target migration behavior: add user_id to todos, add an index, and add a foreign key to users.
+
+
+
+Because this homework app has no existing auth/user schema yet, assume the users table exists before this migration runs. If preserving existing local todos matters, make the migration staged or backfill existing rows before enforcing null: false.
+
+
+
+Update the Todo model association.
+
+
+
+
+
+Edit app/models/todo.rb to make each todo belong to a user.
+
+
+
+Keep this as a required association so a todo cannot be saved without an owner once the migration is in place.
+
+
+
+Update the controller create path to use the authenticated user.
+
+
+
+
+
+Edit app/controllers/todos_controller.rb.
+
+
+
+Replace the current create behavior, which builds directly from Todo, with creation through current_user.todos so the user_id comes from the session rather than request parameters.
+
+
+
+Keep app/controllers/todos_controller.rb strong parameters scoped to todo fields only; do not permit user_id from the browser.
+
+
+
+Consider scoping todo lookup to the current user.
+
+
+
+
+
+For the narrow requested behavior, only create must change.
+
+
+
+For stronger ownership semantics, update index and set_todo in app/controllers/todos_controller.rb to query through current_user.todos, preventing users from viewing or editing each other’s todos.
+
+
+
+I would include this unless the assignment specifically asks only for creation ownership.
+
+
+
+Update fixtures for the new required association.
+
+
+
+
+
+Add or rely on user fixtures from the authentication work, likely in test/fixtures/users.yml.
+
+
+
+Update test/fixtures/todos.yml so each todo fixture references a user.
+
+
+
+Add or update model tests.
+
+
+
+
+
+Edit test/models/todo_test.rb.
+
+
+
+Add a test that a todo is invalid without a user.
+
+
+
+Optionally add a test confirming a todo fixture belongs to the expected user.
+
+
+
+Add or update controller tests.
+
+
+
+
+
+Edit test/controllers/todos_controller_test.rb.
+
+
+
+Sign in or otherwise set the test current_user using the authentication test helper.
+
+
+
+Update the create test to assert the new todo’s user is the signed-in user.
+
+
+
+Add a test that a submitted user_id parameter is ignored, confirming ownership comes from current_user.
+
+
+
+If todo lookup is scoped by owner, add tests that another user cannot access, edit, update, or destroy someone else’s todo.
+
+
+
+Verify the change.
+
+
+
+
+
+Run bin/rails db:migrate to apply the new migration.
+
+
+
+Run bin/rails test to cover model and controller behavior.
+
+
+
+If ownership scoping affects browser flows, run bin/rails test:system as a follow-up.
+
+
+
+6 todo:
+1. Generate migration adding required user reference to todos
+2. Add Todo-to-User association
+3. Build new todos through current_user.todos and keep user_id out of strong params
+4. Update todo/user fixtures for required association
+5. Add model and controller tests for ownership assignment and parameter protection
+6. Run migrations and Rails tests
+
+
+
+
