@@ -249,3 +249,15 @@ If ownership scoping affects browser flows, run bin/rails test:system as a follo
 
 
 
+Agent mode:
+Prompt: Implement only step 1 of the plan: generate a migration called 
+AddUserRefToTodos that adds a user_id integer column to the todos table 
+with an index. Do not add a foreign key constraint since there is no 
+users table yet. Do not touch any other files — not the model, not the 
+controller, not any tests.
+
+
+Link to commit:
+https://github.com/NU-CS-Software-Studio-Spring-26/homework-5-Mythventor/commit/71a9990c7ef2d2fa3bde4e8bcb767d2ab9db9cac
+
+
