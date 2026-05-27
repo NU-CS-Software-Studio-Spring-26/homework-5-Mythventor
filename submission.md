@@ -261,3 +261,40 @@ Link to commit:
 https://github.com/NU-CS-Software-Studio-Spring-26/homework-5-Mythventor/commit/71a9990c7ef2d2fa3bde4e8bcb767d2ab9db9cac
 
 
+
+
+
+Part 4:
+
+A Turbo Stream is a Rails/Hotwire response that sends DOM update instructions 
+to the browser instead of a full HTML page. Rather than reloading the whole page, 
+the server sends small `<turbo-stream>` elements that tell the browser to append, 
+replace, remove, etc. a specific element on the current page.
+
+Key differences from a normal HTML response:
+- Normal HTML response MIME type: `text/html` (replaces the whole page)
+- Turbo Stream MIME type: `text/vnd.turbo-stream.html` (mutates specific elements)
+
+Controller pattern:
+```ruby
+respond_to do |format|
+  format.html { redirect_to todos_path }
+  format.turbo_stream
+end
+```
+
+
+View file convention:
+The matching view lives at `app/views/<controller>/<action>.turbo_stream.erb`.
+For the toggle_priority action that means: 
+`app/views/todos/toggle_priority.turbo_stream.erb`
+
+The 7 Turbo Stream actions:** append, prepend, replace, update, remove, before, after.
+
+What I verified against the Turbo Streams handbook (https://turbo.hotwired.dev/):
+- Confirmed the MIME type is `text/vnd.turbo-stream.html`
+- Confirmed all 7 actions exist and match the handbook's documentation
+- Confirmed the view filename convention `action.turbo_stream.erb` matches 
+  the official Rails guide
+- The app currently has no existing Turbo Stream responses — all controller 
+  actions only respond with `format.html` and `format.json`
